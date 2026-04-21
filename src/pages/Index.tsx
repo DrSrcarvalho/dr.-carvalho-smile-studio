@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import TopBar from "@/components/TopBar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import ImplantVideo from "@/components/ImplantVideo";
 import Services from "@/components/Services";
 import CTABanner from "@/components/CTABanner";
 import Testimonials from "@/components/Testimonials";
@@ -17,6 +18,7 @@ const Index = () => {
       <Header />
       <Hero />
       <About />
+      <ImplantVideo />
       <Services />
       <CTABanner />
       <Testimonials />
