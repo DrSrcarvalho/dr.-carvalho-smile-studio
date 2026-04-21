@@ -1,16 +1,31 @@
-import { useState } from "react";
-import { Play, Loader2 } from "lucide-react";
+import { useState, useRef } from "react";
+import { Play, Loader2, Maximize2 } from "lucide-react";
 import implantVideo from "@/assets/implant-procedure.mp4.asset.json";
 
 const ImplantVideo = () => {
   const [loadVideo, setLoadVideo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlay = () => {
     setIsLoading(true);
     setHasError(false);
     setLoadVideo(true);
+  };
+
+  const handleFullscreen = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    // iOS Safari uses webkitEnterFullscreen on the video element
+    const anyVideo = video as HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+    };
+    if (anyVideo.webkitEnterFullscreen) {
+      anyVideo.webkitEnterFullscreen();
+    } else if (video.requestFullscreen) {
+      video.requestFullscreen();
+    }
   };
 
   return (
@@ -43,6 +58,7 @@ const ImplantVideo = () => {
               {loadVideo && !hasError ? (
                 <>
                   <video
+                    ref={videoRef}
                     src={implantVideo.url}
                     autoPlay
                     loop
@@ -56,7 +72,7 @@ const ImplantVideo = () => {
                       setHasError(true);
                     }}
                     aria-label="Animação 3D do procedimento de implante dentário"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-contain bg-black"
                   />
                   {isLoading && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/90 pointer-events-none gap-2">
@@ -64,6 +80,15 @@ const ImplantVideo = () => {
                       <span className="text-xs text-muted-foreground">Carregando vídeo...</span>
                     </div>
                   )}
+                  <button
+                    type="button"
+                    onClick={handleFullscreen}
+                    aria-label="Ver vídeo em tela cheia"
+                    className="absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium shadow-lg hover:bg-black/75 transition-colors"
+                  >
+                    <Maximize2 className="w-4 h-4" />
+                    Tela cheia
+                  </button>
                 </>
               ) : (
                 <button
