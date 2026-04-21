@@ -1,6 +1,10 @@
+import { useState } from "react";
+import { Play } from "lucide-react";
 import implantVideo from "@/assets/implant-procedure.mp4.asset.json";
 
 const ImplantVideo = () => {
+  const [loadVideo, setLoadVideo] = useState(false);
+
   return (
     <section id="procedimento" className="py-24">
       <div className="container mx-auto px-4">
@@ -24,22 +28,35 @@ const ImplantVideo = () => {
           </div>
 
           <div className="relative">
-            <div className="glass-card rounded-2xl overflow-hidden shadow-xl">
-              <video
-                src={implantVideo.url}
-                autoPlay
-                loop
-                muted
-                playsInline
-                controls
-                preload="metadata"
-                aria-label="Animação 3D do procedimento de implante dentário"
-                className="w-full h-auto block bg-muted"
-              />
+            <div className="glass-card rounded-2xl overflow-hidden shadow-xl aspect-video bg-muted">
+              {loadVideo ? (
+                <video
+                  src={implantVideo.url}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  preload="auto"
+                  aria-label="Animação 3D do procedimento de implante dentário"
+                  className="w-full h-full block object-cover"
+                />
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setLoadVideo(true)}
+                  className="w-full h-full flex flex-col items-center justify-center gap-3 hero-gradient text-white transition-transform hover:scale-[1.01]"
+                  aria-label="Carregar e reproduzir vídeo do procedimento de implante"
+                >
+                  <span className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Play className="w-8 h-8 ml-1" fill="currentColor" />
+                  </span>
+                  <span className="text-sm font-medium tracking-wide">
+                    Toque para assistir
+                  </span>
+                </button>
+              )}
             </div>
-            <p className="text-xs text-muted-foreground text-center mt-3">
-              Toque no vídeo caso não inicie automaticamente
-            </p>
           </div>
         </div>
       </div>
