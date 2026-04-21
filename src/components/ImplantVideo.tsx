@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Play, Loader2, Maximize2 } from "lucide-react";
-import implantVideo from "@/assets/implant-procedure.mp4.asset.json";
+const mobileOptimizedVideo = "/implant-procedure-mobile.mp4";
 
 const ImplantVideo = () => {
   const [hasStarted, setHasStarted] = useState(false);
@@ -8,25 +8,27 @@ const ImplantVideo = () => {
   const [hasError, setHasError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handlePlay = async () => {
+  const handlePlay = () => {
     const video = videoRef.current;
     if (!video) return;
 
     setIsLoading(true);
     setHasError(false);
+    setHasStarted(true);
 
     try {
       video.muted = true;
       video.playsInline = true;
-      const playPromise = video.play();
-      if (playPromise) {
-        await playPromise;
-      }
-      setHasStarted(true);
+      void video.play().catch((error) => {
+        console.error("Falha ao iniciar vídeo no celular:", error);
+        setHasError(true);
+        setHasStarted(false);
+        setIsLoading(false);
+      });
     } catch (error) {
       console.error("Falha ao iniciar vídeo no celular:", error);
       setHasError(true);
-    } finally {
+      setHasStarted(false);
       setIsLoading(false);
     }
   };
@@ -75,12 +77,12 @@ const ImplantVideo = () => {
               <>
                 <video
                   ref={videoRef}
-                  src={implantVideo.url}
+                  src={mobileOptimizedVideo}
                   loop
                   muted
                   playsInline
                   controls
-                  preload="metadata"
+                  preload="auto"
                   onPlaying={() => {
                     setHasStarted(true);
                     setHasError(false);
@@ -118,15 +120,26 @@ const ImplantVideo = () => {
                   </button>
                 )}
                 {hasStarted && (
-                  <button
-                    type="button"
-                    onClick={handleFullscreen}
-                    aria-label="Ver vídeo em tela cheia"
-                    className="absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium shadow-lg hover:bg-black/75 transition-colors"
-                  >
-                    <Maximize2 className="w-4 h-4" />
-                    Tela cheia
-                  </button>
+                  <div className="absolute right-3 top-3 z-10 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={handleFullscreen}
+                      aria-label="Ver vídeo em tela cheia"
+                      className="inline-flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-2 text-xs font-medium text-white shadow-lg backdrop-blur-sm transition-colors hover:bg-black/75"
+                    >
+                      <Maximize2 className="w-4 h-4" />
+                      Tela cheia
+                    </button>
+                    <a
+                      href={mobileOptimizedVideo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center rounded-full bg-black/60 px-3 py-2 text-xs font-medium text-white shadow-lg backdrop-blur-sm transition-colors hover:bg-black/75"
+                      aria-label="Abrir vídeo em nova aba"
+                    >
+                      Abrir
+                    </a>
+                  </div>
                 )}
               </>
             </div>
