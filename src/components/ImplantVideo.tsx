@@ -31,11 +31,15 @@ const ImplantVideo = () => {
                 loop
                 muted
                 playsInline
+                controls
                 preload="metadata"
                 aria-label="Animação 3D do procedimento de implante dentário"
-                className="w-full h-auto block"
+                className="w-full h-auto block bg-muted"
               />
             </div>
+            <p className="text-xs text-muted-foreground text-center mt-3">
+              Toque no vídeo caso não inicie automaticamente
+            </p>
           </div>
         </div>
       </div>
