@@ -5,9 +5,11 @@ import implantVideo from "@/assets/implant-procedure.mp4.asset.json";
 const ImplantVideo = () => {
   const [loadVideo, setLoadVideo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const handlePlay = () => {
     setIsLoading(true);
+    setHasError(false);
     setLoadVideo(true);
   };
 
@@ -36,9 +38,9 @@ const ImplantVideo = () => {
           <div className="relative w-full">
             <div
               className="glass-card rounded-2xl overflow-hidden shadow-xl bg-muted relative w-full"
-              style={{ aspectRatio: "16 / 9", minHeight: "220px" }}
+              style={{ aspectRatio: "16 / 9", minHeight: "240px" }}
             >
-              {loadVideo ? (
+              {loadVideo && !hasError ? (
                 <>
                   <video
                     src={implantVideo.url}
@@ -49,12 +51,17 @@ const ImplantVideo = () => {
                     controls
                     preload="auto"
                     onCanPlay={() => setIsLoading(false)}
+                    onError={() => {
+                      setIsLoading(false);
+                      setHasError(true);
+                    }}
                     aria-label="Animação 3D do procedimento de implante dentário"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   {isLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-muted/80 pointer-events-none">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/90 pointer-events-none gap-2">
                       <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                      <span className="text-xs text-muted-foreground">Carregando vídeo...</span>
                     </div>
                   )}
                 </>
@@ -62,17 +69,17 @@ const ImplantVideo = () => {
                 <button
                   type="button"
                   onClick={handlePlay}
-                  className="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-3 hero-gradient text-white transition-transform active:scale-[0.99]"
+                  className="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-3 hero-gradient text-white transition-transform active:scale-[0.99] cursor-pointer"
                   aria-label="Carregar e reproduzir vídeo do procedimento de implante"
                 >
                   <span className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
                     <Play className="w-8 h-8 ml-1" fill="currentColor" />
                   </span>
                   <span className="text-sm font-medium tracking-wide">
-                    Toque para assistir
+                    {hasError ? "Tentar novamente" : "Toque para assistir"}
                   </span>
                   <span className="text-xs text-white/80">
-                    Vídeo de ~13MB
+                    {hasError ? "Falha ao carregar" : "Vídeo de ~13MB"}
                   </span>
                 </button>
               )}
