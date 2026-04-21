@@ -11,6 +11,9 @@ const Footer = () => {
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} — Todos os direitos reservados.
         </p>
+        <p className="text-[10px] text-muted-foreground/60 mt-4">
+          Desenvolvido por Sebastião Carvalho
+        </p>
       </div>
     </footer>
   );
