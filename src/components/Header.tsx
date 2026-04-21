@@ -13,7 +13,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-card">
+    <header className="fixed top-9 left-0 right-0 z-50 glass-card">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <a href="#inicio" className="flex flex-col">
           <span className="text-xl font-heading font-bold text-primary">
