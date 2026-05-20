@@ -5,8 +5,12 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
+    document.title = "Página não encontrada (404) — Dr. Sebastião Carvalho";
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute("content", "A página que você procura não existe. Volte ao site do Dr. Sebastião Carvalho, Cirurgião Dentista em SP.");
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
   }, [location.pathname]);
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted">
