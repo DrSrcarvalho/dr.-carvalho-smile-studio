@@ -1,9 +1,9 @@
-import iconImplante from "@/assets/icon-implante.png";
-import iconProtese from "@/assets/icon-protese.png";
-import iconClareamento from "@/assets/icon-clareamento.png";
-import iconExtracao from "@/assets/icon-extracao.png";
-import iconCanal from "@/assets/icon-canal.png";
-import iconRestauracao from "@/assets/icon-restauracao.png";
+import iconImplante from "@/assets/icon-implante.webp";
+import iconProtese from "@/assets/icon-protese.webp";
+import iconClareamento from "@/assets/icon-clareamento.webp";
+import iconExtracao from "@/assets/icon-extracao.webp";
+import iconCanal from "@/assets/icon-canal.webp";
+import iconRestauracao from "@/assets/icon-restauracao.webp";
 
 const services = [
   { name: "Implantes", desc: "Reposição de dentes perdidos com implantes de última geração para um sorriso natural e funcional.", icon: iconImplante },
