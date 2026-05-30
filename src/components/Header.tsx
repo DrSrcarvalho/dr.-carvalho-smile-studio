@@ -48,6 +48,8 @@ const Header = () => {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden text-foreground"
+          aria-label={menuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+          aria-expanded={menuOpen}
         >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>

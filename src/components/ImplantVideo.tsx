@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { ExternalLink, Loader2, Maximize2, Play } from "lucide-react";
 
 const mobileOptimizedVideo = "/implant-procedure-mobile.mp4?v=2";
-const mobileVideoPoster = "/implant-procedure-poster.jpg?v=1";
+const mobileVideoPoster = "/implant-procedure-poster.webp?v=2";
 
 const ImplantVideo = () => {
   const [hasStarted, setHasStarted] = useState(false);
